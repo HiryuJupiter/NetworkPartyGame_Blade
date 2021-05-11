@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 775824294}
   - component: {fileID: 775824296}
   - component: {fileID: 775824295}
+  - component: {fileID: 775824297}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -218,6 +219,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &775824297
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775824293}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &786961400
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +413,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1071626355}
+  - component: {fileID: 1071626359}
   - component: {fileID: 1071626356}
+  - component: {fileID: 1071626358}
+  - component: {fileID: 1071626357}
   m_Layer: 0
   m_Name: Beyblade_Root
   m_TagString: Untagged
@@ -426,6 +451,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c2990309c757f4982d53eca4a38505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1071626357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071626354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df49ea0d8df90bb418f4bf68c6fbd661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1071626358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071626354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6f441d6fd5470f4c94704eab3bc37a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &1071626359
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071626354}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1286153165
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +590,7 @@ GameObject:
   - component: {fileID: 1787278799}
   - component: {fileID: 1787278798}
   - component: {fileID: 1787278800}
+  - component: {fileID: 1787278801}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -605,3 +676,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c2990309c757f4982d53eca4a38505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &1787278801
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787278797}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
