@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Beyblade : MonoBehaviour
+public class Beyblade : NetworkBehaviour
 {
     #region MonoBehavior
+    const float TimeBeforeDampingStart = 0.5f;
+
     [SerializeField] Transform spriteRoot;
     [SerializeField] TextMesh text;
 
@@ -14,12 +17,11 @@ public class Beyblade : MonoBehaviour
     Rigidbody2D rb;
 
     //Status
-    int score;
+    [SyncVar] int score;
     bool isMoving;
     bool doDamp;
     float curMoveDur;
-    float timeBeforeDampingStart = 0.1f;
-    float dampAmount = .99f;
+    float dampAmount = .97f;
 
     public Vector2 Velocity => rb.velocity;
 
@@ -28,8 +30,12 @@ public class Beyblade : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    //[Client]
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         if (isMoving)
         {
             MovingUpdate();
@@ -53,7 +59,7 @@ public class Beyblade : MonoBehaviour
         HitsGameObject(collision.gameObject);
     }
 
-    void HitsGameObject (GameObject go)
+    void HitsGameObject(GameObject go)
     {
         if (go.tag == "Dot")
         {
@@ -70,6 +76,7 @@ public class Beyblade : MonoBehaviour
         spriteRoot.Rotate(new Vector3(0f, 0f, rotationSpeed));
     }
 
+    //[ClientRpc] //Only the client gets to shoot the ball
     void ShootBallWhenPressed()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) //Shoot
@@ -81,11 +88,12 @@ public class Beyblade : MonoBehaviour
     #endregion
 
     #region Moving
-    void BeginMoving ()
+    void BeginMoving()
     {
         rb.velocity = ArrowUpDir() * moveSpeed;
         doDamp = false;
         isMoving = true;
+        curMoveDur = 0f;
     }
 
     void MovingUpdate()
@@ -101,7 +109,7 @@ public class Beyblade : MonoBehaviour
         else
         {
             curMoveDur += Time.deltaTime;
-            if (curMoveDur > timeBeforeDampingStart)
+            if (curMoveDur > TimeBeforeDampingStart)
                 doDamp = true;
         }
 
@@ -115,7 +123,8 @@ public class Beyblade : MonoBehaviour
     #endregion
 
     #region Score
-    void IncrementScore ()
+    [Command]
+    void IncrementScore()
     {
         score++;
         text.text = score.ToString();

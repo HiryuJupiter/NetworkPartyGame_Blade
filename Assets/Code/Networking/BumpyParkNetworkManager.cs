@@ -9,14 +9,21 @@ public class BumpyParkNetworkManager : NetworkManager
 
     public bool IsHost { get; private set; } = false;
 
-    
-
-
-
     //Network manager has an empty virtual method OnStartHost. We override it to implemnent
     //our custom features.
     public override void OnStartHost()
     {
         IsHost = true;
+        StartCoroutine(ImParadoidaf());
     }
+
+    IEnumerator ImParadoidaf()
+    {
+        yield return null;
+        yield return null;
+        GameHUD.Instance.SetDebugText("Why :,<");
+        DotSpawner.Spawn();
+        GameManager.Instance.GameStart();
+    }
+
 }

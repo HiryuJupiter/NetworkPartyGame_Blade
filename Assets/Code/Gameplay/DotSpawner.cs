@@ -1,23 +1,25 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Mirror;
 
-public class DotSpawner : MonoBehaviour
+public class DotSpawner : NetworkBehaviour
 {
     public static DotSpawner Instance;
 
-    [SerializeField] GameObject dot;
+    [SerializeField] GameObject dotPf;
     [SerializeField] float spawnRange_x;
     [SerializeField] float spawnRange_y;
 
     private void Awake()
     {
         Instance = this;
-        SpawnDot();
     }
 
+    //[Command]
     void SpawnDot()
     {
-        Instantiate(dot, GetSpawnPos(), Quaternion.identity);
+        GameObject dot = Instantiate(dotPf, GetSpawnPos(), Quaternion.identity);
+        NetworkServer.Spawn(dot);
     }
 
     public static void Spawn() => Instance.SpawnDot();
