@@ -39,14 +39,4 @@ public class BumpyParkNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest, 
     {
         throw new NotImplementedException();
     }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
 }

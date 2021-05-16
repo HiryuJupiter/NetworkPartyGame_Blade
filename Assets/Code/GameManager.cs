@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     const float GameDuration = 10;
 
-    BumpyParkNetworkManager networkManager;
+    //TopdownShooterNetworkManager networkManager;
     GameHUD hud;
 
     float gameTimeFloat = GameDuration;
@@ -33,8 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        hud = GameHUD.Instance;
-        networkManager = BumpyParkNetworkManager.Instance;
+        //hud = GameHUD.Instance;
+        //networkManager = TopdownShooterNetworkManager.Instance;
 
         if (NetworkServer.active)
             StartCoroutine(DelayedGameStart());
@@ -44,11 +44,11 @@ public class GameManager : MonoBehaviour
     IEnumerator DelayedGameStart()
     {
         yield return new WaitForSeconds(1f);
-        gameStarted = true;
-        if (DotSpawner.Instance == null)
-            yield return null;
+        //gameStarted = true;
+        //if (DotSpawner.Instance == null)
+        //    yield return null;
 
-        networkManager.SpawnDot();
+        //networkManager.SpawnDot();
     }
 
     #region GameTime

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class BumpyParkNetworkManager : NetworkManager
+public class TopdownShooterNetworkManager : NetworkManager
 {
     const int MainMenuSceneIndex = 1;
 
@@ -28,7 +28,7 @@ public class BumpyParkNetworkManager : NetworkManager
     //Player name
     //Player colour
 
-    public static BumpyParkNetworkManager Instance => (BumpyParkNetworkManager)singleton;
+    public static TopdownShooterNetworkManager Instance => (TopdownShooterNetworkManager)singleton;
 
     public bool IsHost { get; private set; } = false;
 
@@ -44,17 +44,17 @@ public class BumpyParkNetworkManager : NetworkManager
     {
         base.OnStartServer();
 
-        if (dotSpawner == null)
-        {
-            Debug.Log("Instantiating dot spawner");
-            GameObject go = Instantiate(dotSpawnerPf, Vector3.zero, Quaternion.identity);
-            dotSpawner = go.GetComponent<DotSpawner>();
-            NetworkServer.Spawn(go);
-        }
-        else
-        {
-            Debug.Log("dotSpawner: " + dotSpawner + ", dotSpawner is null: " + (dotSpawner == null));
-        }
+        //if (dotSpawner == null)
+        //{
+        //    Debug.Log("Instantiating dot spawner");
+        //    GameObject go = Instantiate(dotSpawnerPf, Vector3.zero, Quaternion.identity);
+        //    dotSpawner = go.GetComponent<DotSpawner>();
+        //    NetworkServer.Spawn(go);
+        //}
+        //else
+        //{
+        //    Debug.Log("dotSpawner: " + dotSpawner + ", dotSpawner is null: " + (dotSpawner == null));
+        //}
     }
 
     public void SpawnDot ()

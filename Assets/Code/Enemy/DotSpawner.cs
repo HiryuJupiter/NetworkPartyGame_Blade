@@ -35,7 +35,7 @@ public class DotSpawner : NetworkBehaviour
         if (activeDot == null)
         {
             Destroy(activeDot);
-            SpawnDot();
+            //SpawnDot();
         }
     }
 

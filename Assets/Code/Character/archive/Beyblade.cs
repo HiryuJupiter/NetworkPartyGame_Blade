@@ -12,7 +12,7 @@ public class Beyblade : NetworkBehaviour
     //[SerializeField] Transform spriteRoot;
     [SerializeField] TextMesh text;
 
-    BumpyParkNetworkManager networkManager;
+    TopdownShooterNetworkManager networkManager;
 
     float moveSpeed = 25f;
     float rotationSpeed = 500f;
@@ -35,7 +35,7 @@ public class Beyblade : NetworkBehaviour
 
     private void Start()
     {
-        networkManager = BumpyParkNetworkManager.Instance;
+        networkManager = TopdownShooterNetworkManager.Instance;
     }
 
     void Update()
@@ -43,15 +43,18 @@ public class Beyblade : NetworkBehaviour
         if (!isLocalPlayer)
             return;
 
-        if (isMoving)
-        {
-            MovingUpdate();
-        }
-        else
-        {
-            RotateArrow();
-            ShootBallWhenPressed();
-        }
+        //if (isMoving)
+        //{
+        //    MovingUpdate();
+        //}
+        //else
+        //{
+        //    RotateArrow();
+        //    ShootBallWhenPressed();
+        //}
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            CmdIncrementScore();
 
     }
     #endregion
@@ -71,8 +74,8 @@ public class Beyblade : NetworkBehaviour
     {
         if (go.tag == "Dot")
         {
-        Debug.Log("hits  Dot");
-            IncrementScore();
+            Debug.Log("hits  Dot");
+            CmdIncrementScore();
 
             if (DotSpawner.Instance != null)
                 DotSpawner.Instance.EatDot();
@@ -99,7 +102,7 @@ public class Beyblade : NetworkBehaviour
     //[Command]
     void RotateArrow()
     {
-        transform.Rotate(new Vector3(0f, 0f, rotationSpeed* Time.deltaTime));
+        transform.Rotate(new Vector3(0f, 0f, rotationSpeed * Time.deltaTime));
     }
 
     //[ClientRpc] //Only the client gets to shoot the ball
@@ -150,7 +153,13 @@ public class Beyblade : NetworkBehaviour
 
     #region Score
     [Command]
-    void IncrementScore()
+    void CmdIncrementScore()
+    {
+        RpcIncrementScore();
+    }
+
+    [ClientRpc]
+    void RpcIncrementScore()
     {
         score++;
         text.text = score.ToString();

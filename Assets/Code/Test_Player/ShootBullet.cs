@@ -19,7 +19,7 @@ public class ShootBullet : NetworkBehaviour
     void CmdShoot ()
     {
         GameObject obj = Instantiate(pf, transform.position + Vector3.up, Quaternion.identity);
-        //obj.GetComponent<Rigidbody2D>().velocity = Vector2.up * 5f;
+        obj.GetComponent<Rigidbody2D>().velocity = Vector2.up * 5f;
         NetworkServer.Spawn(obj);
         Destroy(obj, 3f);
     }

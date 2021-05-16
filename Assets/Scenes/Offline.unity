@@ -202,6 +202,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39422804}
   m_CullTransparentMesh: 1
+--- !u!114 &166750047 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+  m_PrefabInstance: {fileID: 884076358}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6990077b3e1cbfc40b4ededc352e509e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &276762052
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +296,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1398902686}
+      - m_Target: {fileID: 166750047}
         m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
         m_MethodName: StartHost
         m_Mode: 1
@@ -414,6 +425,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 819203672}
   m_CullTransparentMesh: 1
+--- !u!1001 &884076358
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1874648539699648298, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_Name
+      value: '#TopDownShooterNetworkManager'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: spawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 8665895391370507413, guid: 008962243ea90de4fa9cd1d53ee0f749, type: 3}
+    - target: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: spawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 8665895391370507413, guid: f1796b7a992ea0e48bbe9ebe99985028, type: 3}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
 --- !u!1 &929147128
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,74 +577,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1398902685
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1874648539699648298, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_Name
-      value: '#NetworkManager'
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
---- !u!114 &1398902686 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-  m_PrefabInstance: {fileID: 1398902685}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6990077b3e1cbfc40b4ededc352e509e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1522741577
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +671,7 @@ RectTransform:
   - {fileID: 276762053}
   - {fileID: 2080945475}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -730,7 +742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2080945474
 GameObject:
@@ -815,8 +827,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1398902686}
-        m_TargetAssemblyTypeName: BumpyParkNetworkManager, Assembly-CSharp
+      - m_Target: {fileID: 166750047}
+        m_TargetAssemblyTypeName: TopdownShooterNetworkManager, Assembly-CSharp
         m_MethodName: JoinLocal
         m_Mode: 1
         m_Arguments:
