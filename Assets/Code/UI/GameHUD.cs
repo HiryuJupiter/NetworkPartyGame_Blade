@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class GameHUD : MonoBehaviour
+public class GameHUD : NetworkBehaviour
 {
     public static GameHUD Instance;
 
@@ -10,6 +11,12 @@ public class GameHUD : MonoBehaviour
     [SerializeField] Text time;
     [SerializeField] Text playerWonText;
     [SerializeField] GameObject gameWonGroup;
+
+    [SerializeField] Text testText1;
+    [SerializeField] Text testText2;
+    int testValue1;
+    int testValue2;
+
 
     private void Awake()
     {
@@ -30,5 +37,39 @@ public class GameHUD : MonoBehaviour
     {
         gameWonGroup.SetActive(true);
         playerWonText.text = "Player " + playerNumber + " has won!";
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            IncrementTestValue1();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            CmdIncrementTestValue2();
+        }
+    }
+
+    void IncrementTestValue1 ()
+    {
+        testValue1++;
+        testText1.text = testValue1.ToString();
+    }
+
+    [Command]
+    void CmdIncrementTestValue2()
+    {
+        RpcIncrementTestValue2();
+    }
+
+    [ClientRpc]
+    void RpcIncrementTestValue2()
+    {
+        if (BumpyParkNetworkManager.Instance.IsHost)
+            return;
+
+        testValue2++;
+        testText2.text = testValue2.ToString();
     }
 }

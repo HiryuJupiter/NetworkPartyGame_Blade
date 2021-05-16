@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,28 @@ using Mirror;
 
 public class BumpyParkNetworkManager : NetworkManager
 {
+    const int MainMenuSceneIndex = 1;
+
+    //The player representation in the lobby
+    [SerializeField] BumpyNetworkRoomPlayer roomPlayerPrefab = null;
+    [SerializeField] Beyblade gamePlayerPrefab = null;
+    [SerializeField] GameObject roundSystem = null;
+    [SerializeField] GameObject dotSpawnerPf;
+
+    public static event Action OnClientConnected;
+    public static event Action OnClientDisconnected;
+
+    DotSpawner dotSpawner;
+
+    int TimeLimit;
+    int ScoreLimit;
+    bool nightMode;
+    int mapIndex;
+
+    public List<BumpyNetworkRoomPlayer> RoomPlayers { get; } = new List<BumpyNetworkRoomPlayer>();
+    //Player name
+    //Player colour
+
     public static BumpyParkNetworkManager Instance => (BumpyParkNetworkManager)singleton;
 
     public bool IsHost { get; private set; } = false;
@@ -13,17 +36,57 @@ public class BumpyParkNetworkManager : NetworkManager
     //our custom features.
     public override void OnStartHost()
     {
+        base.OnStartHost();
         IsHost = true;
-        StartCoroutine(ImParadoidaf());
     }
 
-    IEnumerator ImParadoidaf()
+    public override void OnStartServer()
     {
-        yield return null;
-        yield return null;
-        GameHUD.Instance.SetDebugText("Why :,<");
-        DotSpawner.Spawn();
-        GameManager.Instance.GameStart();
+        base.OnStartServer();
+
+        if (dotSpawner == null)
+        {
+            Debug.Log("Instantiating dot spawner");
+            GameObject go = Instantiate(dotSpawnerPf, Vector3.zero, Quaternion.identity);
+            dotSpawner = go.GetComponent<DotSpawner>();
+            NetworkServer.Spawn(go);
+        }
+        else
+        {
+            Debug.Log("dotSpawner: " + dotSpawner + ", dotSpawner is null: " + (dotSpawner == null));
+        }
     }
 
+    public void SpawnDot ()
+    {
+        if (dotSpawner == null)
+            dotSpawner = DotSpawner.Instance;
+
+        if (dotSpawner != null)
+            dotSpawner.SpawnDot();
+    }
+
+
+    public void NotifyPlayersOfReadyState()
+    {
+        foreach (var player in RoomPlayers)
+        {
+            player.HandleReadyToStart(IsReadyToStart());
+        }
+    }
+
+    bool IsReadyToStart()
+    {
+        foreach (var players in RoomPlayers)
+        {
+            //if (!player.IsReady) return false;
+        }
+        return true;
+    }
+
+    public void JoinLocal()
+    {
+        networkAddress = "localhost";
+        StartClient();
+    }
 }

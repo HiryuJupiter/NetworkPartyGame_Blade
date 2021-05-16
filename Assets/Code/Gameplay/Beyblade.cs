@@ -9,11 +9,13 @@ public class Beyblade : NetworkBehaviour
     #region MonoBehavior
     const float TimeBeforeDampingStart = 0.5f;
 
-    [SerializeField] Transform spriteRoot;
+    //[SerializeField] Transform spriteRoot;
     [SerializeField] TextMesh text;
 
+    BumpyParkNetworkManager networkManager;
+
     float moveSpeed = 25f;
-    float rotationSpeed = 2f;
+    float rotationSpeed = 500f;
     Rigidbody2D rb;
 
     //Status
@@ -28,9 +30,14 @@ public class Beyblade : NetworkBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        DontDestroyOnLoad(gameObject);
     }
 
-    //[Client]
+    private void Start()
+    {
+        networkManager = BumpyParkNetworkManager.Instance;
+    }
+
     void Update()
     {
         if (!isLocalPlayer)
@@ -45,6 +52,7 @@ public class Beyblade : NetworkBehaviour
             RotateArrow();
             ShootBallWhenPressed();
         }
+
     }
     #endregion
 
@@ -63,17 +71,35 @@ public class Beyblade : NetworkBehaviour
     {
         if (go.tag == "Dot")
         {
+        Debug.Log("hits  Dot");
             IncrementScore();
-            Destroy(go);
-            DotSpawner.Spawn();
+
+            if (DotSpawner.Instance != null)
+                DotSpawner.Instance.EatDot();
+            else
+            {
+                Debug.LogError("shouldn't happen");
+            }
+
+            //networkManager.SpawnDot();
+
+            //if (DotSpawner.Instance != null  && NetworkServer.active)
+            //    DotSpawner.Instance.SpawnDot();
         }
     }
+
+    //[Command]
+    //void DestroyDot (GameObject go)
+    //{
+    //    Destroy(go);
+    //}
     #endregion
 
     #region Rotating and waiting to shoot
+    //[Command]
     void RotateArrow()
     {
-        spriteRoot.Rotate(new Vector3(0f, 0f, rotationSpeed));
+        transform.Rotate(new Vector3(0f, 0f, rotationSpeed* Time.deltaTime));
     }
 
     //[ClientRpc] //Only the client gets to shoot the ball
@@ -118,7 +144,7 @@ public class Beyblade : NetworkBehaviour
 
     void MakeArrowFaceMovingDirection()
     {
-        spriteRoot.rotation = Quaternion.LookRotation(Vector3.forward, rb.velocity);
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, rb.velocity);
     }
     #endregion
 
@@ -132,6 +158,6 @@ public class Beyblade : NetworkBehaviour
     #endregion
 
     #region Minor
-    Vector3 ArrowUpDir() => spriteRoot.transform.up;
+    Vector3 ArrowUpDir() => transform.up;
     #endregion
 }

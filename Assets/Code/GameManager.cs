@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     const float GameDuration = 10;
 
+    BumpyParkNetworkManager networkManager;
     GameHUD hud;
 
     float gameTimeFloat = GameDuration;
@@ -17,24 +19,36 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("-- Destroyed duplicate GameManager ---");
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
     }
 
     private void Start()
     {
         hud = GameHUD.Instance;
-    }
+        networkManager = BumpyParkNetworkManager.Instance;
 
-    private void Update()
-    {
-        if (gameStarted)
-            TickGameTime();
+        if (NetworkServer.active)
+            StartCoroutine(DelayedGameStart());
     }
     #endregion
 
-    public void GameStart ()
+    IEnumerator DelayedGameStart()
     {
+        yield return new WaitForSeconds(1f);
         gameStarted = true;
+        if (DotSpawner.Instance == null)
+            yield return null;
+
+        networkManager.SpawnDot();
     }
 
     #region GameTime
