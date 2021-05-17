@@ -8,68 +8,76 @@ public class TopDownCharacterController : NetworkBehaviour
 {
     #region MonoBehavior
     //Bullet
-    [SerializeField] GameObject bulletPf;
-    [SerializeField] Transform shootPoint;
+    [SerializeField] private GameObject bulletPf;
+    [SerializeField] private Transform shootPoint;
     
     //Movement
-    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] private float moveSpeed = 10f;
 
     //Health
-    [SerializeField] int maxHealth = 10;
-    [SyncVar] int currentHealth = 10; //SyncVar means it must be synchronizd among instances
+    [SerializeField] private int maxHealth = 10;
+    [SyncVar] private int currentHealth = 10; //SyncVar means it must be synchronizd among instances
+
+    //Text
+    [SerializeField] TextMesh text;
 
     //Ref
-    TopdownShooterNetworkManager networkManager;
-    Rigidbody2D rb;
+    private TopdownShooterNetworkManager networkManager;
+    private Rigidbody2D rb;
 
     //Status
-    int playerIndex;
-    int score;
+    private int playerIndex;
+    private int score;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    private void Start()
     {
         networkManager = TopdownShooterNetworkManager.Instance;
     }
 
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.tag == "Dot")
+        {
+            if(isLocalPlayer)
+            {
+                CmdIncrementScore(collider.gameObject);
+            }
+        }
+        if (collider.tag == "Enemy")
+        {
+            TakeDamage(1);
+            Destroy(collider.gameObject);
+        }
+    }
+
+
+    [Command]
+    public void CmdSpawnEffect()
+    {
+        //Usage:
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    CmdSpawnEffect();
+        //}
+        NetworkServer.Spawn(TestSpawner.Instance.GetSpawnEffect());
+    }
+
+    private void Update()
     {
         //Don't let other players control your player
         if (!isLocalPlayer) 
             return;
 
-        //if (isMoving)
-        //{
-        //    MovingUpdate();
-        //}
-        //else
-        //{
-        //    RotateArrow();
-        //    ShootBallWhenPressed();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //    CmdIncrementScore();
-
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            //CmdSpawnEnemy();
-            //if (NetworkServer.active)
-            //{
-            //    CmdSpawnEnemy();
-            //    //EnemySpawner.Instance.SpawnEnemy();
-            //}
-            //else
-            //{
-            //    Debug.Log("spawn enemy failed, no active server");
-            //}
+            CmdSpawnEffect();
         }
-
         MovementUpdate();
         RotateTowardMouse();
         ShootUpdate();
@@ -96,12 +104,10 @@ public class TopDownCharacterController : NetworkBehaviour
     #endregion
 
     #region Shoot
-
     void ShootUpdate()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) //Shoot
         {
-            //EnemySpawner.Instance.CmdShoot(bulletPf, shootPoint);
             CmdShoot();
         }
     }
@@ -111,27 +117,29 @@ public class TopDownCharacterController : NetworkBehaviour
     {
         GameObject bullet = Instantiate(bulletPf, shootPoint.position, shootPoint.rotation);
         bullet.GetComponent<Rigidbody2D>().velocity = transform.up * 5f;
-        //bullet.GetComponent<Bullet>().Shoot (lookingDir , playerIndex);
+        //bullet.GetComponent<Bullet>().Shoot(lookingDir, playerIndex);
         NetworkServer.Spawn(bullet);
         Destroy(bullet, 3f);
     }
     #endregion
 
-    #region Taking Damage
-    private void OnTriggerEnter2D(Collider2D collider)
+    #region Score
+    [Command]
+    void CmdIncrementScore(GameObject toDestroy)
     {
-        //if (collider.tag == "Bullet")
-        //{
-        //    TakeDamage(1);
-        //    Destroy(collider.gameObject);
-        //}
-        if (collider.tag == "Enemy")
-        {
-            TakeDamage(1);
-            Destroy(collider.gameObject);
-        }
+        RpcIncrementScore();
+        NetworkServer.Destroy(toDestroy);
     }
 
+    [ClientRpc]
+    void RpcIncrementScore()
+    {
+        score++;
+        text.text = score.ToString();
+    }
+    #endregion
+
+    #region Taking Damage
     void TakeDamage(int amount)
     {
         if (isServer) //Is on server and was spawned

@@ -225,6 +225,7 @@ MonoBehaviour:
   shootPoint: {fileID: 665303240651653856}
   moveSpeed: 10
   maxHealth: 10
+  text: {fileID: 665303239980551921}
 --- !u!114 &889058441495374517
 MonoBehaviour:
   m_ObjectHideFlags: 0

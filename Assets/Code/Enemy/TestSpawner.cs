@@ -3,20 +3,36 @@ using Mirror;
 
 public class TestSpawner : NetworkBehaviour
 {
-    public GameObject spawnPrefab;
-    public NetworkBehaviour player;
+    public static TestSpawner Instance;
+    public GameObject prefab;
 
-    void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && player.isLocalPlayer)
+        Instance = this;
+    }
+
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.Space) && player.isLocalPlayer)
+        if (Input.GetKeyDown(KeyCode.Space) && NetworkServer.active)
         {
-            SpawnObject();
+            SpawnEffects();
         }
     }
 
-    void SpawnObject()
+    public GameObject GetSpawnEffect()
     {
-        GameObject enemy =  Instantiate(spawnPrefab, Vector3.zero, Quaternion.identity);
-        NetworkServer.Spawn(enemy);
+        return Instantiate(prefab, GetRandomPosition(), Quaternion.identity);
+    }
+
+    public void SpawnEffects()
+    {
+        //GameObject spawned =  Instantiate(prefab, GetRandomPosition(), Quaternion.identity);
+        //NetworkServer.Spawn(spawned);
+    }
+
+    Vector3 GetRandomPosition ()
+    {
+        return new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f);
     }
 }
