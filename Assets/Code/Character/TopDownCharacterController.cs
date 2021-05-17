@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class TopDownCharacterController : NetworkBehaviour
 {
     #region MonoBehavior
@@ -13,6 +12,7 @@ public class TopDownCharacterController : NetworkBehaviour
     
     //Movement
     [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 500f;
 
     //Health
     [SerializeField] private int maxHealth = 10;
@@ -27,7 +27,12 @@ public class TopDownCharacterController : NetworkBehaviour
 
     //Status
     private int playerIndex;
+    [SyncVar]
     private int score;
+    bool isMoving;
+    bool doDamp;
+    float curMoveDur;
+    float dampAmount = .97f;
 
     private void Awake()
     {
@@ -40,6 +45,28 @@ public class TopDownCharacterController : NetworkBehaviour
         networkManager = TopdownShooterNetworkManager.Instance;
     }
 
+    private void Update()
+    {
+        //Don't let other players control your player
+        if (!isLocalPlayer)
+            return;
+
+        if (isMoving)
+        {
+            MovingUpdate();
+        }
+        else
+        {
+            RotateArrow();
+            ShootBallWhenPressed();
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            CmdSpawnEffect();
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Dot")
@@ -49,77 +76,66 @@ public class TopDownCharacterController : NetworkBehaviour
                 CmdIncrementScore(collider.gameObject);
             }
         }
-        if (collider.tag == "Enemy")
-        {
-            TakeDamage(1);
-            Destroy(collider.gameObject);
-        }
     }
-
 
     [Command]
     public void CmdSpawnEffect()
     {
-        //Usage:
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    CmdSpawnEffect();
-        //}
         NetworkServer.Spawn(TestSpawner.Instance.GetSpawnEffect());
     }
-
-    private void Update()
-    {
-        //Don't let other players control your player
-        if (!isLocalPlayer) 
-            return;
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            CmdSpawnEffect();
-        }
-        MovementUpdate();
-        RotateTowardMouse();
-        ShootUpdate();
-    }
     #endregion
 
-    #region Movement
-    void MovementUpdate ()
+
+    #region Rotating and waiting to shoot
+    //[Command]
+    void RotateArrow()
     {
-        Vector3 vel = Vector3.zero;
-        vel.x = Input.GetAxis("Horizontal") * moveSpeed;
-        vel.y = Input.GetAxis("Vertical") * moveSpeed;
-        rb.velocity = vel;
+        transform.Rotate(new Vector3(0f, 0f, rotationSpeed * Time.deltaTime));
     }
 
-    void RotateTowardMouse()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 0;
-
-        Vector3 lookingDir = Camera.main.ScreenToWorldPoint(mousePos) - transform.position;
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, lookingDir);
-    }
-    #endregion
-
-    #region Shoot
-    void ShootUpdate()
+    //[ClientRpc] //Only the client gets to shoot the ball
+    void ShootBallWhenPressed()
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) //Shoot
         {
-            CmdShoot();
+            BeginMoving();
         }
     }
 
-    [Command]
-    void CmdShoot()
+    #endregion
+
+    #region Moving
+    void BeginMoving()
     {
-        GameObject bullet = Instantiate(bulletPf, shootPoint.position, shootPoint.rotation);
-        bullet.GetComponent<Rigidbody2D>().velocity = transform.up * 5f;
-        //bullet.GetComponent<Bullet>().Shoot(lookingDir, playerIndex);
-        NetworkServer.Spawn(bullet);
-        Destroy(bullet, 3f);
+        rb.velocity = transform.up * moveSpeed;
+        doDamp = false;
+        isMoving = true;
+        curMoveDur = 0f;
+    }
+
+    void MovingUpdate()
+    {
+        if (doDamp)
+        {
+            rb.velocity *= dampAmount;
+            if (rb.velocity.sqrMagnitude < 1f)
+            {
+                isMoving = false;
+            }
+        }
+        else
+        {
+            curMoveDur += Time.deltaTime;
+            if (curMoveDur > 0.5f)
+                doDamp = true;
+        }
+
+        MakeArrowFaceMovingDirection();
+    }
+
+    void MakeArrowFaceMovingDirection()
+    {
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, rb.velocity);
     }
     #endregion
 
@@ -136,25 +152,6 @@ public class TopDownCharacterController : NetworkBehaviour
     {
         score++;
         text.text = score.ToString();
-    }
-    #endregion
-
-    #region Taking Damage
-    void TakeDamage(int amount)
-    {
-        if (isServer) //Is on server and was spawned
-        {
-            currentHealth -= amount;
-            Destroy(gameObject);
-            RpcOnDamagedFeedback();
-        }
-    }
-
-    //[Command] send from clients to the server
-    [ClientRpc] // ClientRpc is executed in the client, even if it gets called in server
-    private void RpcOnDamagedFeedback()
-    {
-        Debug.Log("Player hit by bullet");
     }
     #endregion
 }

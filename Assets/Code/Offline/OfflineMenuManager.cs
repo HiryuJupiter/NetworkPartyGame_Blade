@@ -8,28 +8,42 @@ public class OfflineMenuManager : MonoBehaviour
     public GameObject MainMenu;
     public GameObject ConnectionsMenu;
     public GameObject JoinMenu;
-    public GameObject ConnectionsMenu;
-    GameObject activeMenu;
+    public GameObject hostMenu;
+    public InputField joinPlayerNameInputfield;
+    public InputField hostPlayerNameInputField;
+    private GameObject activeMenu;
+
+    private TopdownShooterNetworkManager networkManager;
 
     private void Awake()
     {
         activeMenu = MainMenu;
     }
 
-    public void OpenConenctionsMenu ()
+    private void Start()
+    {
+        networkManager = TopdownShooterNetworkManager.Instance;
+    }
+
+    #region Menu opening and closing
+    public void OpenConenctionsMenu()
     {
         CloseActive();
         OpenGameObject(ConnectionsMenu);
     }
 
-    public void OpenMainMenu()
+    public void OpenJoinPanel()
     {
         CloseActive();
-        OpenGameObject(ConnectionsMenu);
+        OpenGameObject(JoinMenu);
     }
 
+    public void OpenHostPanel()
+    {
+        CloseActive();
+        OpenGameObject(hostMenu);
+    }
 
-    //Private
     void OpenGameObject (GameObject go)
     {
         activeMenu = go;
@@ -37,4 +51,20 @@ public class OfflineMenuManager : MonoBehaviour
     }
 
     void CloseActive() => activeMenu?.SetActive(false);
+    #endregion
+
+    #region Server starting
+    public void JoinGame ()
+    {
+        networkManager.StartClient();
+    }
+
+    public void HostGame ()
+    {
+        networkManager.PlayerName = hostPlayerNameInputField.text;
+        networkManager.StartHost();
+    }
+    #endregion
+
+    //public bool IsJoinPlayerNamed() => !string.IsNullOrEmpty(hostPlayerNameInputField.text);
 }

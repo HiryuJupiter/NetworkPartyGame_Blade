@@ -8,6 +8,9 @@ public class TopdownShooterNetworkManager : NetworkManager
 {
     const int MainMenuSceneIndex = 1;
 
+    public string PlayerName;
+    public string GameName;
+
     //The player representation in the lobby
     [SerializeField] BumpyNetworkRoomPlayer roomPlayerPrefab = null;
     [SerializeField] Beyblade gamePlayerPrefab = null;
@@ -66,7 +69,6 @@ public class TopdownShooterNetworkManager : NetworkManager
             dotSpawner.SpawnDot();
     }
 
-
     public void NotifyPlayersOfReadyState()
     {
         foreach (var player in RoomPlayers)
@@ -84,9 +86,9 @@ public class TopdownShooterNetworkManager : NetworkManager
         return true;
     }
 
-    public void JoinLocal()
-    {
-        networkAddress = "localhost";
-        StartClient();
-    }
+    //public void JoinLocal()
+    //{
+    //    networkAddress = "localhost";
+    //    StartClient();
+    //}
 }
