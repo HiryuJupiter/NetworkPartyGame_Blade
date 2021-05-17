@@ -43,23 +43,6 @@ public class TopdownShooterNetworkManager : NetworkManager
         IsHost = true;
     }
 
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
-
-        //if (dotSpawner == null)
-        //{
-        //    Debug.Log("Instantiating dot spawner");
-        //    GameObject go = Instantiate(dotSpawnerPf, Vector3.zero, Quaternion.identity);
-        //    dotSpawner = go.GetComponent<DotSpawner>();
-        //    NetworkServer.Spawn(go);
-        //}
-        //else
-        //{
-        //    Debug.Log("dotSpawner: " + dotSpawner + ", dotSpawner is null: " + (dotSpawner == null));
-        //}
-    }
-
     public void SpawnDot ()
     {
         if (dotSpawner == null)
@@ -85,10 +68,4 @@ public class TopdownShooterNetworkManager : NetworkManager
         }
         return true;
     }
-
-    //public void JoinLocal()
-    //{
-    //    networkAddress = "localhost";
-    //    StartClient();
-    //}
 }

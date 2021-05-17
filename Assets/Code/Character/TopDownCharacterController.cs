@@ -85,7 +85,6 @@ public class TopDownCharacterController : NetworkBehaviour
     }
     #endregion
 
-
     #region Rotating and waiting to shoot
     //[Command]
     void RotateArrow()
