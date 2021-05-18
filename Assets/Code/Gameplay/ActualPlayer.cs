@@ -6,17 +6,12 @@ using Mirror;
 public class ActualPlayer : NetworkBehaviour
 {
     #region MonoBehavior
-    //Bullet
-    [SerializeField] GameObject bulletPf;
-    [SerializeField] Transform shootPoint;
-    
+    private bool isEnabled = false;
+    public void Enable() => isEnabled = true;
+
     //Movement
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float rotationSpeed = 500f;
-
-    //Health
-    [SerializeField] int maxHealth = 10;
-    [SyncVar] int currentHealth = 10; //SyncVar means it must be synchronizd among instances
 
     //Text
     [SerializeField] TextMesh text;
@@ -27,7 +22,6 @@ public class ActualPlayer : NetworkBehaviour
     //Status
     [SyncVar]
     string displayName = "Loading...";
-    int playerIndex;
     [SyncVar]
     int score;
     bool isMoving;
@@ -35,14 +29,22 @@ public class ActualPlayer : NetworkBehaviour
     float curMoveDur;
     float dampAmount = .97f;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     private void Update()
     {
-        //Don't let other players control your player
-        if (!isLocalPlayer)
-        {
-            Debug.Log("no");
+        if (!isEnabled)
             return;
-        }
+
+        //Don't let other players control your player
+        //if (!isLocalPlayer)
+        //{
+        //    Debug.Log("no");
+        //    return;
+        //}
 
         if (isMoving)
         {
@@ -64,7 +66,7 @@ public class ActualPlayer : NetworkBehaviour
     {
         if (collider.tag == "Dot")
         {
-            if(isLocalPlayer)
+            if (isLocalPlayer)
             {
                 CmdIncrementScore(collider.gameObject);
             }
@@ -88,6 +90,7 @@ public class ActualPlayer : NetworkBehaviour
     //[ClientRpc] //Only the client gets to shoot the ball
     void ShootBallWhenPressed()
     {
+        //Debug.Log("hi");
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)) //Shoot
         {
             BeginMoving();

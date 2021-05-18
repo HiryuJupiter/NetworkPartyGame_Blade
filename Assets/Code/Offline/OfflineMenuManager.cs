@@ -18,7 +18,7 @@ public class OfflineMenuManager : MonoBehaviour
 
     private GameObject activeMenu;
 
-    private BeybladeNetworkManager networkManager;
+    private BattlecarsNetworkManager networkManager;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class OfflineMenuManager : MonoBehaviour
 
     private void Start()
     {
-        networkManager = BeybladeNetworkManager.Instance;
+        networkManager = BattlecarsNetworkManager.Instance;
     }
 
     #region Menu opening and closing
