@@ -24,14 +24,14 @@ public class BumpyNetworkRoomPlayer : NetworkBehaviour
         }
     }
 
-    TopdownShooterNetworkManager room;
-    TopdownShooterNetworkManager NetworkManager
+    BeybladeNetworkManager room;
+    BeybladeNetworkManager NetworkManager
     {
         get
         {
             if (room != null)
                 return room;
-            return room = TopdownShooterNetworkManager.singleton as TopdownShooterNetworkManager;
+            return room = BeybladeNetworkManager.singleton as BeybladeNetworkManager;
         }
     }
 

@@ -22,7 +22,7 @@ public class TopDownCharacterController : NetworkBehaviour
     [SerializeField] TextMesh text;
 
     //Ref
-    private TopdownShooterNetworkManager networkManager;
+    private BeybladeNetworkManager networkManager;
     private Rigidbody2D rb;
 
     //Status
@@ -42,7 +42,7 @@ public class TopDownCharacterController : NetworkBehaviour
 
     private void Start()
     {
-        networkManager = TopdownShooterNetworkManager.Instance;
+        networkManager = BeybladeNetworkManager.Instance;
     }
 
     private void Update()

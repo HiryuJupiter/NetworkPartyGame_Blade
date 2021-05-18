@@ -12,7 +12,7 @@ public class Beyblade : NetworkBehaviour
     //[SerializeField] Transform spriteRoot;
     [SerializeField] TextMesh text;
 
-    TopdownShooterNetworkManager networkManager;
+    BeybladeNetworkManager networkManager;
 
     float moveSpeed = 25f;
     float rotationSpeed = 500f;
@@ -35,7 +35,7 @@ public class Beyblade : NetworkBehaviour
 
     private void Start()
     {
-        networkManager = TopdownShooterNetworkManager.Instance;
+        networkManager = BeybladeNetworkManager.Instance;
     }
 
     void Update()

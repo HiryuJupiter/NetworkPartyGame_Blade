@@ -66,7 +66,7 @@ public class GameHUD : NetworkBehaviour
     [ClientRpc]
     void RpcIncrementTestValue2()
     {
-        if (TopdownShooterNetworkManager.Instance.IsHost)
+        if (BeybladeNetworkManager.Instance.IsHost)
             return;
 
         testValue2++;

@@ -837,7 +837,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 338818201}
   m_OnClick:
     m_PersistentCalls:
@@ -1215,22 +1215,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: '#TopDownShooterNetworkManager'
       objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: spawnPrefabs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: spawnPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 8665895391370507413, guid: 008962243ea90de4fa9cd1d53ee0f749, type: 3}
-    - target: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: spawnPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 8665895391370507413, guid: f1796b7a992ea0e48bbe9ebe99985028, type: 3}
-    - target: {fileID: 1874648539699648300, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
-      propertyPath: spawnPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 8665895391370507413, guid: 44aaccb6884f8764cae441ee56269743, type: 3}
     - target: {fileID: 1874648539699648301, guid: 6b3c916e946539342a009ec084e3b396, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1912,7 +1896,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1872186033}
+        m_TargetAssemblyTypeName: OfflineMenuManager, Assembly-CSharp
+        m_MethodName: InputFieldUpdate_HostGameUsername
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -2206,6 +2202,8 @@ MonoBehaviour:
   hostMenu: {fileID: 1926732108}
   joinPlayerNameInputfield: {fileID: 2084133739}
   hostPlayerNameInputField: {fileID: 1590277825}
+  buttonJoinGame: {fileID: 2003265532}
+  buttonHostGame: {fileID: 338818200}
 --- !u!4 &1872186034
 Transform:
   m_ObjectHideFlags: 0
@@ -2402,7 +2400,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2003265533}
   m_OnClick:
     m_PersistentCalls:
@@ -2553,7 +2551,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1872186033}
+        m_TargetAssemblyTypeName: OfflineMenuManager, Assembly-CSharp
+        m_MethodName: InputFieldUpdate_JoinGameUsername
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}

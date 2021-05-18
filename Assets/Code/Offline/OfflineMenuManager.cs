@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class OfflineMenuManager : MonoBehaviour
 {
-    public GameObject MainMenu;
-    public GameObject ConnectionsMenu;
-    public GameObject JoinMenu;
-    public GameObject hostMenu;
-    public InputField joinPlayerNameInputfield;
-    public InputField hostPlayerNameInputField;
+    [SerializeField] GameObject MainMenu;
+    [SerializeField] GameObject ConnectionsMenu;
+    [SerializeField] GameObject JoinMenu;
+    [SerializeField] GameObject hostMenu;
+    [SerializeField] InputField joinPlayerNameInputfield;
+    [SerializeField] InputField hostPlayerNameInputField;
+    [SerializeField] Button buttonJoinGame;
+    [SerializeField] Button buttonHostGame;
+
     private GameObject activeMenu;
 
-    private TopdownShooterNetworkManager networkManager;
+    private BeybladeNetworkManager networkManager;
 
     private void Awake()
     {
@@ -22,7 +25,7 @@ public class OfflineMenuManager : MonoBehaviour
 
     private void Start()
     {
-        networkManager = TopdownShooterNetworkManager.Instance;
+        networkManager = BeybladeNetworkManager.Instance;
     }
 
     #region Menu opening and closing
@@ -51,6 +54,18 @@ public class OfflineMenuManager : MonoBehaviour
     }
 
     void CloseActive() => activeMenu?.SetActive(false);
+    #endregion
+
+    #region Input field update
+    public void InputFieldUpdate_JoinGameUsername ()
+    {
+        buttonJoinGame.interactable = !string.IsNullOrEmpty(joinPlayerNameInputfield.text);
+    }
+
+    public void InputFieldUpdate_HostGameUsername()
+    {
+        buttonHostGame.interactable = !string.IsNullOrEmpty(hostPlayerNameInputField.text);
+    }
     #endregion
 
     #region Server starting

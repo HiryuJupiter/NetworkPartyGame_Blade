@@ -53,7 +53,7 @@ MonoBehaviour:
   serverBatching: 1
   serverBatchInterval: 0
   offlineScene: Assets/Scenes/Offline.unity
-  onlineScene: Assets/Scenes/Online.unity
+  onlineScene: Assets/Scenes/Lobby.unity
   transport: {fileID: 1874648539699648299}
   networkAddress: localhost
   maxConnections: 4
@@ -65,6 +65,12 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 8665895391370507413, guid: 008962243ea90de4fa9cd1d53ee0f749, type: 3}
+  - {fileID: 8665895391370507413, guid: f1796b7a992ea0e48bbe9ebe99985028, type: 3}
+  - {fileID: 8665895391370507413, guid: 44aaccb6884f8764cae441ee56269743, type: 3}
+  lobbyScene: Assets/Scenes/Lobby.unity
+  gameplayScene: Assets/Scenes/Online.unity
+  PlayerName: 
+  GameName: 
   roomPlayerPrefab: {fileID: 0}
   gamePlayerPrefab: {fileID: 0}
   roundSystem: {fileID: 0}
