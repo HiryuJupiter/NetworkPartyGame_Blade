@@ -1,10 +1,12 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class OfflineMenuManager : MonoBehaviour
 {
+    public static string PlayerName = "Playername";
+
     [SerializeField] GameObject MainMenu;
     [SerializeField] GameObject ConnectionsMenu;
     [SerializeField] GameObject JoinMenu;
@@ -47,7 +49,7 @@ public class OfflineMenuManager : MonoBehaviour
         OpenGameObject(hostMenu);
     }
 
-    void OpenGameObject (GameObject go)
+    void OpenGameObject(GameObject go)
     {
         activeMenu = go;
         activeMenu.SetActive(true);
@@ -57,7 +59,7 @@ public class OfflineMenuManager : MonoBehaviour
     #endregion
 
     #region Input field update
-    public void InputFieldUpdate_JoinGameUsername ()
+    public void InputFieldUpdate_JoinGameUsername()
     {
         buttonJoinGame.interactable = !string.IsNullOrEmpty(joinPlayerNameInputfield.text);
     }
@@ -69,15 +71,19 @@ public class OfflineMenuManager : MonoBehaviour
     #endregion
 
     #region Server starting
-    public void JoinGame ()
+    public void JoinGame()
     {
+        PlayerName = joinPlayerNameInputfield.text;
         networkManager.StartClient();
+        CloseActive();
     }
 
-    public void HostGame ()
+    public void HostGame()
     {
-        networkManager.PlayerName = hostPlayerNameInputField.text;
+        PlayerName = hostPlayerNameInputField.text;
         networkManager.StartHost();
+        CloseActive();
+        Debug.Log("start host");
     }
     #endregion
 

@@ -66,9 +66,7 @@ public class GameHUD : NetworkBehaviour
     [ClientRpc]
     void RpcIncrementTestValue2()
     {
-        if (BeybladeNetworkManager.Instance.IsHost)
-            return;
-
+        
         testValue2++;
         testText2.text = testValue2.ToString();
     }
