@@ -5,13 +5,37 @@ using UnityEngine.UI;
 
 public class Lobby : MonoBehaviour
 {
+    public static int SpawnSpeed = 4;
+    public static int TimeLimit = 10;
+    public static bool NightOrDay = true;
+
     List<LobbyPlayerSlot> teamSlots = new List<LobbyPlayerSlot>();
     [SerializeField] private GameObject teamHolder;
     [SerializeField] Button readyUpButton;
     [SerializeField] Button startGameButton;
     [SerializeField] Camera uiCam;
 
+    [SerializeField] Text text_SpawnSpeed;
+    [SerializeField] Text text_TimeLimit;
+
     PlayerNet localPlayer;
+
+    public void UpdateSpawnSpeed (float amount)
+    {
+        SpawnSpeed = Mathf.RoundToInt(amount);
+        text_SpawnSpeed.text = amount.ToString();
+    }
+
+    public void UpdateTimeLimit(float amount)
+    {
+        TimeLimit = Mathf.RoundToInt(amount);
+        text_TimeLimit.text = amount.ToString();
+    }
+
+    public void UpdateNightOrDay (bool isNight)
+    {
+        NightOrDay = isNight;
+    }
 
     public void AssignPlayerToSlot(PlayerNet _player, int _slotId)
     {

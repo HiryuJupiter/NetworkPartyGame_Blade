@@ -25,17 +25,30 @@ public class BeybladeNetworkManager : NetworkManager
 
     public bool IsHost { get; private set; } = false;
 
-    public BattlecarsNetworkDiscovery discovery;
+    public int FindWinningPlayer ()
+    {
+        int winnerIndex = 0;
+        int winnerScore = 0;
 
-    private Dictionary<byte, PlayerNet> players = new Dictionary<byte, PlayerNet>();
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (players[i].score > winnerScore)
+            {
+                winnerIndex = i;
+            }
+        }
+    
+        return winnerIndex;
+    }
+
+    private Dictionary<int, PlayerNet> players = new Dictionary<int, PlayerNet>();
 
     public override void OnStartHost()
     {
         IsHost = true;
-        discovery.AdvertiseServer();
     }
 
-    public PlayerNet GetPlayerForId(byte _playerId)
+    public PlayerNet GetPlayerForId(int _playerId)
     {
         PlayerNet player;
         players.TryGetValue(_playerId, out player);
@@ -82,7 +95,7 @@ public class BeybladeNetworkManager : NetworkManager
         byte id = 0;
         //List<string> playerUsernames = players.Values.Select(x => x.username).ToList();
         // Generate a list that is sorted by the keys value
-        List<byte> playerIds = players.Keys.OrderBy(x => x).ToList();
+        List<int> playerIds = players.Keys.OrderBy(x => x).ToList();
         // Loop through all keys (playerID's) in the player dictionary
         foreach (byte key in playerIds)
         {

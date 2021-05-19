@@ -16,21 +16,13 @@ public class PlayerNet : NetworkBehaviour
     private Lobby lobby;
     private bool hasJoinedLobby = false;
 
+    public int score => GetComponent<ActualPlayer>().score;
+
     public void StartMatch()
     {
         if (isLocalPlayer)
         {
             CmdStartMatch();
-        }
-    }
-
-    public void SetUsername(string _name)
-    {
-        if (isLocalPlayer)
-        {
-            // Only localplayers can call Commands as localplayers are the only
-            // ones who have the authority to talk to the server
-            CmdSetUsername(_name);
         }
     }
 
@@ -82,6 +74,10 @@ public class PlayerNet : NetworkBehaviour
         PlayerNet player = BeybladeNetworkManager.Instance.LocalPlayer;
 
         FindObjectOfType<Lobby>().OnMatchStarted();
+        StartCoroutine(SpawnDotsRegularly());
+        StartCoroutine(FindObjectOfType<GameManager>().BeginGameCountdown());
+        FindObjectOfType<GameHUD>().SetNightAndDay();
+        //FindObjectOfType<Lobby>().OnMatchStarted();
         player.GetComponent<ActualPlayer>().Enable();
     }
     #endregion
@@ -101,18 +97,32 @@ public class PlayerNet : NetworkBehaviour
         // Lobby successfully got, so assign the player
         lobby.AssignPlayerToSlot(_player, _slotId);
     }
-    #endregion
 
-    // Start is called before the first frame update
-    void Start()
+    IEnumerator SpawnDotsRegularly()
     {
-        SetUsername(BeybladeNetworkManager.Instance.PlayerName);
+        //if (BeybladeNetworkManager.Instance.IsHost && isLocalPlayer)
+        if (BeybladeNetworkManager.Instance.IsHost)
+        {
+            while (TestSpawner.Instance != null)
+            {
+                NetworkServer.Spawn(TestSpawner.Instance.GetSpawnEffect());
+                yield return new WaitForSeconds(Lobby.SpawnSpeed);
+            }
+        }
     }
 
-    // Update is called once per frame
+    #endregion
+
+    void Start()
+    {
+        if (isLocalPlayer)
+        {
+            CmdSetUsername(BeybladeNetworkManager.Instance.PlayerName);
+        }
+    }
+
     void Update()
     {
-        // Determine if we are on the host client
         if (BeybladeNetworkManager.Instance.IsHost)
         {
             // Attempt to get the lobby if we haven't already joined a lobby
@@ -133,17 +143,13 @@ public class PlayerNet : NetworkBehaviour
         BeybladeNetworkManager.Instance.AddPlayer(this);
     }
 
-    // Runs only when the object is connected is the local player
     public override void OnStartLocalPlayer()
     {
-        // Load the scene with the lobby
-        SceneManager.LoadSceneAsync("InGameMenus", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("LobbyRoom", LoadSceneMode.Additive);
     }
 
-    // Runs when the client is disconnected from the server
     public override void OnStopClient()
     {
-        // Remove the playerID from the server
         BeybladeNetworkManager.Instance.RemovePlayer(playerId);
     }
 }

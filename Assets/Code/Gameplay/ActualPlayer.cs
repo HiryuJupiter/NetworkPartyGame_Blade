@@ -23,7 +23,7 @@ public class ActualPlayer : NetworkBehaviour
     [SyncVar]
     string displayName = "Loading...";
     [SyncVar]
-    int score;
+    public int score;
     bool isMoving;
     bool doDamp;
     float curMoveDur;
@@ -56,10 +56,10 @@ public class ActualPlayer : NetworkBehaviour
             ShootBallWhenPressed();
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            CmdSpawnEffect();
-        }
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    CmdSpawnEffect();
+        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

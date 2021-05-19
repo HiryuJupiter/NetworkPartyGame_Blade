@@ -36,10 +36,24 @@ public class GameManager : MonoBehaviour
         //hud = GameHUD.Instance;
         //networkManager = TopdownShooterNetworkManager.Instance;
 
-        if (NetworkServer.active)
-            StartCoroutine(DelayedGameStart());
+        //if (NetworkServer.active)
+        //    StartCoroutine(DelayedGameStart());
     }
     #endregion
+
+    public IEnumerator BeginGameCountdown ()
+    {
+        hud = GameHUD.Instance;
+        float time = Lobby.TimeLimit;
+        while (time > 0f)
+        {
+            time -= Time.deltaTime;
+            hud.SetTime((int)time);
+            yield return null;
+        }
+
+        GameHUD.Instance.SetWinner(BeybladeNetworkManager.Instance.FindWinningPlayer());
+    }
 
     IEnumerator DelayedGameStart()
     {

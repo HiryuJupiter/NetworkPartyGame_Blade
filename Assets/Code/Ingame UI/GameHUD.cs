@@ -11,6 +11,7 @@ public class GameHUD : NetworkBehaviour
     [SerializeField] Text time;
     [SerializeField] Text playerWonText;
     [SerializeField] GameObject gameWonGroup;
+    [SerializeField] Text nightAndDay;
 
     [SerializeField] Text testText1;
     [SerializeField] Text testText2;
@@ -49,6 +50,11 @@ public class GameHUD : NetworkBehaviour
         {
             CmdIncrementTestValue2();
         }
+    }
+
+    public void SetNightAndDay ()
+    {
+        nightAndDay.text = Lobby.NightOrDay ? "Night" : "Day";
     }
 
     void IncrementTestValue1 ()
