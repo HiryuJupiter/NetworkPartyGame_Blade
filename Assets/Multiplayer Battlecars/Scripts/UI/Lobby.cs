@@ -20,9 +20,9 @@ public class Lobby : MonoBehaviour
     // Flipping bool that determines which column the connected player will be added to
     private bool assigningToLeft = true;
 
-    private BattlecarsPlayerNet localPlayer;
+    private PlayerNet localPlayer;
 
-    public void AssignPlayerToSlot(BattlecarsPlayerNet _player, bool _left, int _slotId)
+    public void AssignPlayerToSlot(PlayerNet _player, bool _left, int _slotId)
     {
         // Get the correct slot list depending on the left param
         List<LobbyPlayerSlot> slots = _left ? leftTeamSlots : rightTeamSlots;
@@ -30,7 +30,7 @@ public class Lobby : MonoBehaviour
         slots[_slotId].AssignPlayer(_player);
     }
 
-    public void OnPlayerConnected(BattlecarsPlayerNet _player)
+    public void OnPlayerConnected(PlayerNet _player)
     {
         bool assigned = false;
 
@@ -89,7 +89,7 @@ public class Lobby : MonoBehaviour
 
         readyUpButton.onClick.AddListener(() =>
         {
-            BattlecarsPlayerNet player = BattlecarsNetworkManager.Instance.LocalPlayer;
+            PlayerNet player = BeybladeNetworkManager.Instance.LocalPlayer;
             player.SetReady(!player.ready);
         });
 
@@ -134,7 +134,7 @@ public class Lobby : MonoBehaviour
                 return false;
         }
 
-        return BattlecarsNetworkManager.Instance.IsHost;
+        return BeybladeNetworkManager.Instance.IsHost;
         //return playerCount >= 2 && BattlecarsNetworkManager.Instance.IsHost;
     }
 }

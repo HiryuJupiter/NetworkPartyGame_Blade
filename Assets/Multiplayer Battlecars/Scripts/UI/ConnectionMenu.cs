@@ -17,7 +17,7 @@ public class ConnectionMenu : MonoBehaviour
     [SerializeField] private DiscoveredGame gameTemplate;
     [SerializeField] private Transform foundGamesHolder;
 
-    [SerializeField] private BattlecarsNetworkManager networkManager;
+    [SerializeField] private BeybladeNetworkManager networkManager;
 
     private Dictionary<IPAddress, DiscoveredGame> discoveredGames = new Dictionary<IPAddress, DiscoveredGame>();
 

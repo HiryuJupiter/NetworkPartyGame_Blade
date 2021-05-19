@@ -15,10 +15,10 @@ public class DiscoveredGame : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerCount;
     [SerializeField] private ConnectionMenu connectionMenu;
 
-    private BattlecarsNetworkManager networkManager;
+    private BeybladeNetworkManager networkManager;
     private DiscoveryResponse response;
 
-    public void Setup(DiscoveryResponse _response, BattlecarsNetworkManager _manager)
+    public void Setup(DiscoveryResponse _response, BeybladeNetworkManager _manager)
     {
         UpdateResponse(_response);
         networkManager = _manager;

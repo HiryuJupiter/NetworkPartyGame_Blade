@@ -78,7 +78,7 @@ public class BattlecarsNetworkDiscovery : NetworkDiscoveryBase<DiscoveryRequest,
     /// <returns>A message containing information about this server</returns>
     protected override DiscoveryResponse ProcessRequest(DiscoveryRequest _request, IPEndPoint _endpoint)
     {
-        BattlecarsNetworkManager netManager = BattlecarsNetworkManager.Instance;
+        BeybladeNetworkManager netManager = BeybladeNetworkManager.Instance;
 
         try
         {

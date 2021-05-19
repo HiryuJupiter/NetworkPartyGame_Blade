@@ -1261,7 +1261,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
       propertyPath: onlineScene
-      value: Assets/Multiplayer Battlecars/Scenes/Game.unity
+      value: Assets/Scenes/Game.unity
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
+      propertyPath: offlineScene
+      value: Assets/Scenes/Offline.unity
       objectReference: {fileID: 0}
     - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
       propertyPath: spawnPrefabs.Array.size

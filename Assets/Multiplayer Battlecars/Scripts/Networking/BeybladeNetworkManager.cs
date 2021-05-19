@@ -1,25 +1,20 @@
 using UnityEngine;
-
 using Mirror;
-
 using System.Linq;
 using System.Collections.Generic;
 
-public class BattlecarsNetworkManager : NetworkManager
+public class BeybladeNetworkManager : NetworkManager
 {
-    /// <summary>
-    /// A reference to the battlecars version of the network manager singleton.
-    /// </summary>
-    public static BattlecarsNetworkManager Instance => singleton as BattlecarsNetworkManager;
-    public BattlecarsPlayerNet LocalPlayer
+    public static BeybladeNetworkManager Instance => singleton as BeybladeNetworkManager;
+
+    public PlayerNet LocalPlayer
     {
         get
         {
-            foreach (BattlecarsPlayerNet player in players.Values)
+            foreach (PlayerNet player in players.Values)
             {
                 if (player.isLocalPlayer) return player;
             }
-
             return null;
         }
     }
@@ -28,38 +23,26 @@ public class BattlecarsNetworkManager : NetworkManager
     public string PlayerName { get; set; }
     public int PlayerCount => players.Count;
 
-    /// <summary>
-    /// Whether or not this NetworkManager is the host
-    /// </summary>
     public bool IsHost { get; private set; } = false;
 
     public BattlecarsNetworkDiscovery discovery;
 
-    private Dictionary<byte, BattlecarsPlayerNet> players = new Dictionary<byte, BattlecarsPlayerNet>();
+    private Dictionary<byte, PlayerNet> players = new Dictionary<byte, PlayerNet>();
 
-    /// <summary>
-    /// Runs only when connecting to an online scene as a host
-    /// </summary>
     public override void OnStartHost()
     {
         IsHost = true;
         discovery.AdvertiseServer();
     }
 
-    /// <summary>
-    /// Attempts to return a player corresponding to the passed id.
-    /// If no player found, returns null (which is concerning)
-    /// </summary>
-    public BattlecarsPlayerNet GetPlayerForId(byte _playerId)
+    public PlayerNet GetPlayerForId(byte _playerId)
     {
-        BattlecarsPlayerNet player;
+        PlayerNet player;
         players.TryGetValue(_playerId, out player);
         return player;
     }
 
-    // Runs when a client connects to the server. This function is responsible for creating the player
-    // object and placing it in the scene. It is also responsible for making sure the connection is aware
-    // of what their player object is.
+    // Runs when a client connects to the server. This function is responsible for creating the player object and placing it in the scene. It is also responsible for making sure the connection is aware of what their player object is.
     public override void OnServerAddPlayer(NetworkConnection _connection)
     {
         // Give us the next spawn position depending on the spawnMode
@@ -77,10 +60,6 @@ public class BattlecarsNetworkManager : NetworkManager
         NetworkServer.AddPlayerForConnection(_connection, playerObj);
     }
 
-    /// <summary>
-    /// Removes the player with the corresponding ID from the dictionary
-    /// </summary>
-    /// <param name="_id"></param>
     public void RemovePlayer(byte _id)
     {
         // If the player is present in the dictionary, remove them
@@ -90,7 +69,7 @@ public class BattlecarsNetworkManager : NetworkManager
         }
     }
 
-    public void AddPlayer(BattlecarsPlayerNet _player)
+    public void AddPlayer(PlayerNet _player)
     {
         if (!players.ContainsKey(_player.playerId))
         {
@@ -113,7 +92,7 @@ public class BattlecarsNetworkManager : NetworkManager
         }
 
         // Get the playernet component from the gameobject and assign it's playerid
-        BattlecarsPlayerNet player = _playerObj.GetComponent<BattlecarsPlayerNet>();
+        PlayerNet player = _playerObj.GetComponent<PlayerNet>();
         player.playerId = id;
         players.Add(id, player);
     }

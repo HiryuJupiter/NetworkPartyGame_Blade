@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using Mirror;
 
 using System.Collections;
-public class BattlecarsPlayerNet : NetworkBehaviour
+public class PlayerNet : NetworkBehaviour
 {
     [SyncVar] public byte playerId;
     [SyncVar] public string username = "";
@@ -69,17 +69,17 @@ public class BattlecarsPlayerNet : NetworkBehaviour
     {
         // If this is running on the host client, we don't need to set the player
         // to the slot, so just ignore this call
-        if (BattlecarsNetworkManager.Instance.IsHost)
+        if (BeybladeNetworkManager.Instance.IsHost)
             return;
 
         // Find the Lobby in the scene and set the player to the correct slot
-        StartCoroutine(AssignPlayerToLobbySlotDelayed(BattlecarsNetworkManager.Instance.GetPlayerForId(_playerId), _left, _slotId));
+        StartCoroutine(AssignPlayerToLobbySlotDelayed(BeybladeNetworkManager.Instance.GetPlayerForId(_playerId), _left, _slotId));
     }
 
     [ClientRpc]
     public void RpcStartMatch()
     {
-        BattlecarsPlayerNet player = BattlecarsNetworkManager.Instance.LocalPlayer;
+        PlayerNet player = BeybladeNetworkManager.Instance.LocalPlayer;
 
         FindObjectOfType<Lobby>().OnMatchStarted();
         player.GetComponent<ActualPlayer>().Enable();
@@ -87,7 +87,7 @@ public class BattlecarsPlayerNet : NetworkBehaviour
     #endregion
 
     #region Coroutines
-    private IEnumerator AssignPlayerToLobbySlotDelayed(BattlecarsPlayerNet _player, bool _left, int _slotId)
+    private IEnumerator AssignPlayerToLobbySlotDelayed(PlayerNet _player, bool _left, int _slotId)
     {
         // Keep trying to get the lobby until it's not null
         Lobby lobby = FindObjectOfType<Lobby>();
@@ -106,14 +106,14 @@ public class BattlecarsPlayerNet : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetUsername(BattlecarsNetworkManager.Instance.PlayerName);
+        SetUsername(BeybladeNetworkManager.Instance.PlayerName);
     }
 
     // Update is called once per frame
     void Update()
     {
         // Determine if we are on the host client
-        if (BattlecarsNetworkManager.Instance.IsHost)
+        if (BeybladeNetworkManager.Instance.IsHost)
         {
             // Attempt to get the lobby if we haven't already joined a lobby
             if (lobby == null && !hasJoinedLobby)
@@ -130,7 +130,7 @@ public class BattlecarsPlayerNet : NetworkBehaviour
 
     public override void OnStartClient()
     {
-        BattlecarsNetworkManager.Instance.AddPlayer(this);
+        BeybladeNetworkManager.Instance.AddPlayer(this);
     }
 
     // Runs only when the object is connected is the local player
@@ -144,6 +144,6 @@ public class BattlecarsPlayerNet : NetworkBehaviour
     public override void OnStopClient()
     {
         // Remove the playerID from the server
-        BattlecarsNetworkManager.Instance.RemovePlayer(playerId);
+        BeybladeNetworkManager.Instance.RemovePlayer(playerId);
     }
 }
