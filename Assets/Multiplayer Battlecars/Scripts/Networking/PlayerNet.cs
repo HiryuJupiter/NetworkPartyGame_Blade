@@ -44,11 +44,11 @@ public class PlayerNet : NetworkBehaviour
         }
     }
 
-    public void AssignPlayerToSlot(bool _left, int _slotId, byte _playerId)
+    public void AssignPlayerToSlot(int _slotId, byte _playerId)
     {
         if (isLocalPlayer)
         {
-            CmdAssignPlayerToLobbySlot(_left, _slotId, _playerId);
+            CmdAssignPlayerToLobbySlot(_slotId, _playerId);
         }
     }
 
@@ -58,14 +58,14 @@ public class PlayerNet : NetworkBehaviour
     [Command]
     public void CmdSetReady(bool _ready) => ready = _ready;
     [Command]
-    public void CmdAssignPlayerToLobbySlot(bool _left, int _slotId, byte _playerId) => RpcAssignPlayerToLobbySlot(_left, _slotId, _playerId);
+    public void CmdAssignPlayerToLobbySlot(int _slotId, byte _playerId) => RpcAssignPlayerToLobbySlot(_slotId, _playerId);
     [Command]
     public void CmdStartMatch() => RpcStartMatch();
     #endregion
 
     #region RPCs
     [ClientRpc]
-    public void RpcAssignPlayerToLobbySlot(bool _left, int _slotId, byte _playerId)
+    public void RpcAssignPlayerToLobbySlot(int _slotId, byte _playerId)
     {
         // If this is running on the host client, we don't need to set the player
         // to the slot, so just ignore this call
@@ -73,7 +73,7 @@ public class PlayerNet : NetworkBehaviour
             return;
 
         // Find the Lobby in the scene and set the player to the correct slot
-        StartCoroutine(AssignPlayerToLobbySlotDelayed(BeybladeNetworkManager.Instance.GetPlayerForId(_playerId), _left, _slotId));
+        StartCoroutine(AssignPlayerToLobbySlotDelayed(BeybladeNetworkManager.Instance.GetPlayerForId(_playerId), _slotId));
     }
 
     [ClientRpc]
@@ -87,7 +87,7 @@ public class PlayerNet : NetworkBehaviour
     #endregion
 
     #region Coroutines
-    private IEnumerator AssignPlayerToLobbySlotDelayed(PlayerNet _player, bool _left, int _slotId)
+    private IEnumerator AssignPlayerToLobbySlotDelayed(PlayerNet _player, int _slotId)
     {
         // Keep trying to get the lobby until it's not null
         Lobby lobby = FindObjectOfType<Lobby>();
@@ -99,7 +99,7 @@ public class PlayerNet : NetworkBehaviour
         }
 
         // Lobby successfully got, so assign the player
-        lobby.AssignPlayerToSlot(_player, _left, _slotId);
+        lobby.AssignPlayerToSlot(_player, _slotId);
     }
     #endregion
 

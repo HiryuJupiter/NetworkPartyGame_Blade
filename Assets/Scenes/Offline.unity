@@ -1984,7 +1984,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1624305614}
-  - component: {fileID: 1624305613}
   - component: {fileID: 1624305615}
   m_Layer: 0
   m_Name: MenuManager
@@ -1993,25 +1992,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1624305613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1624305612}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c841db42b389a7a4784e102e5317c94e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hostNameText: {fileID: 0}
-  gameNameText: {fileID: 0}
-  playerNameText: {fileID: 0}
-  hostStartGame: {fileID: 0}
-  gameTemplate: {fileID: 0}
-  foundGamesHolder: {fileID: 0}
-  networkManager: {fileID: 0}
 --- !u!4 &1624305614
 Transform:
   m_ObjectHideFlags: 0

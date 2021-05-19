@@ -7,7 +7,6 @@ public class LobbyPlayerSlot : MonoBehaviour
 {
     public bool IsTaken => player != null;
     public PlayerNet Player => player;
-    public bool IsLeft { get; private set; } = false;
 
     [SerializeField] private TextMeshProUGUI nameDisplay;
     [SerializeField] private Button playerButton;
@@ -17,8 +16,6 @@ public class LobbyPlayerSlot : MonoBehaviour
 
     // Set the player in this slot to the passed player
     public void AssignPlayer(PlayerNet _player) => player = _player;
-
-    public void SetSide(bool _left) => IsLeft = _left;
 
     // Update is called once per frame
     void Update()
