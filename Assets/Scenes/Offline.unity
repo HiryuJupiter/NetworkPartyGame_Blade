@@ -503,11 +503,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5154836546416465731, guid: 89a4df2a40690ce4a82b30327773df83, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 435
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5154836546416465731, guid: 89a4df2a40690ce4a82b30327773df83, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -42
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5154836546416465731, guid: 89a4df2a40690ce4a82b30327773df83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1386,27 +1386,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
-      propertyPath: onlineScene
-      value: Assets/Scenes/Game.unity
-      objectReference: {fileID: 0}
-    - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
-      propertyPath: offlineScene
-      value: Assets/Scenes/Offline.unity
-      objectReference: {fileID: 0}
-    - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
-      propertyPath: spawnPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 8665895391370507413, guid: 44aaccb6884f8764cae441ee56269743, type: 3}
     - target: {fileID: 6705852979660488979, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
       propertyPath: spawnPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6705852979660488980, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
+      objectReference: {fileID: 6019099075868327818, guid: 2c798a07fa3ec0949a7e0215193a2a48, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e81c39841ed945e469229df3adeed1dd, type: 3}
 --- !u!1 &929147128
 GameObject:
@@ -3063,11 +3050,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5154836546416465731, guid: 89a4df2a40690ce4a82b30327773df83, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 435
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5154836546416465731, guid: 89a4df2a40690ce4a82b30327773df83, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -42
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5154836546416465731, guid: 89a4df2a40690ce4a82b30327773df83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

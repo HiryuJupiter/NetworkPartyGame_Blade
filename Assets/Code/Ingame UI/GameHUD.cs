@@ -30,7 +30,7 @@ public class GameHUD : NetworkBehaviour
 
     public void SetNightAndDay ()
     {
-        nightAndDay.text = Lobby.NightOrDay ? "Night" : "Day";
-        Camera.main.backgroundColor = Lobby.NightOrDay ? Color.black : Color.grey;
+        //nightAndDay.text = Lobby.Instance.NightOrDay ? "Night" : "Day";
+        //Camera.main.backgroundColor = Lobby.Instance.NightOrDay ? Color.black : Color.grey;
     }
 }

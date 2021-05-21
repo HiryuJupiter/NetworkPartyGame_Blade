@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6705852979660488977}
   - component: {fileID: 6705852979660488979}
   - component: {fileID: 6705852979660488978}
-  - component: {fileID: 6705852979660488980}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -52,8 +51,8 @@ MonoBehaviour:
   serverTickRate: 30
   serverBatching: 0
   serverBatchInterval: 0
-  offlineScene: Assets/Multiplayer Battlecars/Scenes/Offline.unity
-  onlineScene: Assets/Multiplayer Battlecars/Scenes/Game.unity
+  offlineScene: Assets/Scenes/Offline.unity
+  onlineScene: Assets/Scenes/Game.unity
   transport: {fileID: 6705852979660488978}
   networkAddress: localhost
   maxConnections: 100
@@ -63,8 +62,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 665303240385288500, guid: a98fe9b2e814800489068f6771effb85, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
-  spawnPrefabs: []
-  discovery: {fileID: 6705852979660488980}
+  spawnPrefabs:
+  - {fileID: 8665895391370507413, guid: 44aaccb6884f8764cae441ee56269743, type: 3}
 --- !u!114 &6705852979660488978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,23 +86,3 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &6705852979660488980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6705852979660488976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51b44ca256b921f408fcf734725a4e2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secretHandshake: -2358991058815542127
-  serverBroadcastListenPort: 47777
-  enableActiveDiscovery: 1
-  ActiveDiscoveryInterval: 3
-  transport: {fileID: 0}
-  onServerFound:
-    m_PersistentCalls:
-      m_Calls: []

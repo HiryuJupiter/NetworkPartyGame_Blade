@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 8115771}
   - component: {fileID: 8115773}
   - component: {fileID: 8115772}
-  - component: {fileID: 8115775}
+  - component: {fileID: 8115774}
   m_Layer: 5
   m_Name: Panel - Lobby
   m_TagString: Untagged
@@ -201,7 +201,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8115770}
   m_CullTransparentMesh: 1
---- !u!114 &8115775
+--- !u!114 &8115774
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1265,7 +1265,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8115775}
+      - m_Target: {fileID: 8115774}
         m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
         m_MethodName: UpdateMap1OrMap2
         m_Mode: 0
@@ -2086,7 +2086,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8115775}
+      - m_Target: {fileID: 8115774}
         m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
         m_MethodName: UpdateTimeLimit
         m_Mode: 0
@@ -3342,7 +3342,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8115775}
+      - m_Target: {fileID: 8115774}
         m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
         m_MethodName: UpdateSpawnSpeed
         m_Mode: 0
@@ -3514,7 +3514,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8115775}
+      - m_Target: {fileID: 8115774}
         m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
         m_MethodName: UpdateNightOrDay
         m_Mode: 0

@@ -5,10 +5,7 @@ using UnityEngine.UI;
 
 public class Lobby : MonoBehaviour
 {
-    public static int SpawnSpeed = 4;
-    public static int TimeLimit = 10;
-    public static bool NightOrDay = true;
-    public static bool Map1OrMap2 = true;
+    public static Lobby Instance;
 
     List<LobbyPlayerSlot> teamSlots = new List<LobbyPlayerSlot>();
     [SerializeField] private GameObject teamHolder;
@@ -22,26 +19,41 @@ public class Lobby : MonoBehaviour
 
     PlayerNet localPlayer;
 
+    //
+    public bool NightOrDay = true;
+    public bool IsMap1 = true;
+    public float TimeLimit = 10f;
+    public float SpawnInterval = 4f;
+
+    private void Awake()
+    {
+        Instance = this;
+        //GameObject settings = Instantiate(mapSettingsPf, Vector3.zero, Quaternion.identity);
+        //mapSettings = settings.GetComponent<MapSettings>();
+    }
+
     public void UpdateSpawnSpeed (float amount)
     {
-        SpawnSpeed = Mathf.RoundToInt(amount);
-        text_SpawnSpeed.text = amount.ToString();
+        SpawnInterval = Mathf.RoundToInt(amount);
+        text_SpawnSpeed.text = SpawnInterval.ToString();
     }
 
     public void UpdateTimeLimit(float amount)
     {
         TimeLimit = Mathf.RoundToInt(amount);
-        text_TimeLimit.text = amount.ToString();
+        text_TimeLimit.text = TimeLimit.ToString();
     }
 
     public void UpdateNightOrDay (bool isNight)
     {
         NightOrDay = isNight;
+        //NightOrDay = isNight;
     }
 
     public void UpdateMap1OrMap2(bool isMap1)
     {
-        Map1OrMap2 = isMap1;
+        IsMap1 = isMap1;
+        //Map1OrMap2 = isMap1;
     }
 
     public void AssignPlayerToSlot(PlayerNet _player, int _slotId)
@@ -93,7 +105,28 @@ public class Lobby : MonoBehaviour
             player.SetReady(!player.ready);
         });
 
-        startGameButton.onClick.AddListener(() => localPlayer.StartMatch());
+        startGameButton.onClick.AddListener(() => PressedStartButton());// 
+
+        //mapSettings = MapSettings.Instance;
+    }
+
+    void PressedStartButton ()
+    {
+        localPlayer.SetNightOrDay(NightOrDay);
+        localPlayer.SetIsMap1(IsMap1);
+        localPlayer.SetTimeLimit(TimeLimit);
+        localPlayer.AssignSpawnInterval(SpawnInterval);
+
+        for (int i = 0; i < teamSlots.Count; i++)
+        {
+            LobbyPlayerSlot slot = teamSlots[i];
+            if (slot.IsTaken)
+            {
+                slot.Player.UpdateMapSettings();
+            }
+        }
+
+        localPlayer.StartMatch();
     }
 
     public void OnMatchStarted()
@@ -123,7 +156,7 @@ public class Lobby : MonoBehaviour
                 return false;
         }
 
-        //return BeybladeNetworkManager.Instance.IsHost;
-        return playerCount >= 2 && BeybladeNetworkManager.Instance.IsHost;
+        return BeybladeNetworkManager.Instance.IsHost;
+        //return playerCount >= 2 && BeybladeNetworkManager.Instance.IsHost;
     }
 }

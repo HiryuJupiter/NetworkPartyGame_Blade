@@ -39,18 +39,17 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void SetMap()
+    public void SetMap(bool isMap1)
     {
-        if (Lobby.Map1OrMap2)
+        if (isMap1)
             map1.SetActive(true);
         else
             map2.SetActive(true);
     }
 
-    public IEnumerator BeginGameCountdown ()
+    public IEnumerator BeginGameCountdown (float time)
     {
         hud = GameHUD.Instance;
-        float time = Lobby.TimeLimit;
         while (time > 0f)
         {
             time -= Time.deltaTime;
