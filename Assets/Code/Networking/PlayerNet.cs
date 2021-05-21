@@ -11,6 +11,7 @@ public class PlayerNet : NetworkBehaviour
     [SyncVar] public string username = "";
     [SyncVar] public bool ready = false;
 
+
     public UnityEvent onMatchStarted = new UnityEvent();
 
     private Lobby lobby;
@@ -23,6 +24,7 @@ public class PlayerNet : NetworkBehaviour
         if (isLocalPlayer)
         {
             CmdStartMatch();
+            //GetComponent<ActualPlayer>().StartGame();
         }
     }
 
@@ -52,7 +54,10 @@ public class PlayerNet : NetworkBehaviour
     [Command]
     public void CmdAssignPlayerToLobbySlot(int _slotId, byte _playerId) => RpcAssignPlayerToLobbySlot(_slotId, _playerId);
     [Command]
-    public void CmdStartMatch() => RpcStartMatch();
+    public void CmdStartMatch()
+    {
+        RpcStartMatch();
+    }
     #endregion
 
     #region RPCs
@@ -75,7 +80,11 @@ public class PlayerNet : NetworkBehaviour
 
         FindObjectOfType<Lobby>().OnMatchStarted();
         StartCoroutine(SpawnDotsRegularly());
-        StartCoroutine(FindObjectOfType<GameManager>().BeginGameCountdown());
+
+        GameManager gm = FindObjectOfType<GameManager>();
+        StartCoroutine(gm.BeginGameCountdown());
+        gm.SetMap();
+
         FindObjectOfType<GameHUD>().SetNightAndDay();
         //FindObjectOfType<Lobby>().OnMatchStarted();
         player.GetComponent<ActualPlayer>().Enable();
@@ -117,7 +126,7 @@ public class PlayerNet : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            CmdSetUsername(BeybladeNetworkManager.Instance.PlayerName);
+            CmdSetUsername(BeybladeNetworkManager.PlayerName);
         }
     }
 

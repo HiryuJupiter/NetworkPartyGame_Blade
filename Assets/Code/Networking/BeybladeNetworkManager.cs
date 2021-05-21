@@ -19,8 +19,8 @@ public class BeybladeNetworkManager : NetworkManager
         }
     }
 
-    public string GameName { get; set; }
-    public string PlayerName { get; set; }
+    public static string PlayerName { get; set; }
+    public static Color PlayerColor = Color.white;
     public int PlayerCount => players.Count;
 
     public bool IsHost { get; private set; } = false;

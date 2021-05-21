@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     const float GameDuration = 10;
+    [SerializeField] GameObject map1;
+    [SerializeField] GameObject map2;
 
     //TopdownShooterNetworkManager networkManager;
     GameHUD hud;
@@ -30,16 +32,20 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
-
-    private void Start()
-    {
-        //hud = GameHUD.Instance;
-        //networkManager = TopdownShooterNetworkManager.Instance;
-
-        //if (NetworkServer.active)
-        //    StartCoroutine(DelayedGameStart());
-    }
     #endregion
+
+    public void QuitGame ()
+    {
+        Application.Quit();
+    }
+
+    public void SetMap()
+    {
+        if (Lobby.Map1OrMap2)
+            map1.SetActive(true);
+        else
+            map2.SetActive(true);
+    }
 
     public IEnumerator BeginGameCountdown ()
     {
@@ -54,47 +60,4 @@ public class GameManager : MonoBehaviour
 
         GameHUD.Instance.SetWinner(BeybladeNetworkManager.Instance.FindWinningPlayer());
     }
-
-    IEnumerator DelayedGameStart()
-    {
-        yield return new WaitForSeconds(1f);
-        //gameStarted = true;
-        //if (DotSpawner.Instance == null)
-        //    yield return null;
-
-        //networkManager.SpawnDot();
-    }
-
-    #region GameTime
-    void TickGameTime()
-    {
-        gameTimeFloat -= Time.deltaTime;
-        if (gameTimeInt != (int)gameTimeFloat)
-        {
-            gameTimeInt = (int)gameTimeFloat;
-            hud.SetTime(gameTimeInt);
-
-            if (gameTimeInt <= 0)
-            {
-                GameOver();
-            }
-        }
-    }
-
-    void GameOver()
-    {
-        if (gameStarted)
-        {
-            gameStarted = false;
-            hud.SetWinner(1);
-            StartCoroutine(DelayUntilQuit());
-        }
-    }
-
-    IEnumerator DelayUntilQuit()
-    {
-        yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    #endregion
 }

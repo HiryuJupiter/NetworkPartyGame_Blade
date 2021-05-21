@@ -8,6 +8,7 @@ public class Lobby : MonoBehaviour
     public static int SpawnSpeed = 4;
     public static int TimeLimit = 10;
     public static bool NightOrDay = true;
+    public static bool Map1OrMap2 = true;
 
     List<LobbyPlayerSlot> teamSlots = new List<LobbyPlayerSlot>();
     [SerializeField] private GameObject teamHolder;
@@ -17,6 +18,7 @@ public class Lobby : MonoBehaviour
 
     [SerializeField] Text text_SpawnSpeed;
     [SerializeField] Text text_TimeLimit;
+    [SerializeField] GameObject gameSettingRoot;
 
     PlayerNet localPlayer;
 
@@ -35,6 +37,11 @@ public class Lobby : MonoBehaviour
     public void UpdateNightOrDay (bool isNight)
     {
         NightOrDay = isNight;
+    }
+
+    public void UpdateMap1OrMap2(bool isMap1)
+    {
+        Map1OrMap2 = isMap1;
     }
 
     public void AssignPlayerToSlot(PlayerNet _player, int _slotId)
@@ -74,6 +81,9 @@ public class Lobby : MonoBehaviour
 
     void Start()
     {
+        //Hide or reveaal the game settings
+        gameSettingRoot.SetActive(BeybladeNetworkManager.Instance.IsHost);
+
         // Fill the two lists with their slots
         teamSlots.AddRange(teamHolder.GetComponentsInChildren<LobbyPlayerSlot>());
        
@@ -113,7 +123,7 @@ public class Lobby : MonoBehaviour
                 return false;
         }
 
-        return BeybladeNetworkManager.Instance.IsHost;
-        //return playerCount >= 2 && BattlecarsNetworkManager.Instance.IsHost;
+        //return BeybladeNetworkManager.Instance.IsHost;
+        return playerCount >= 2 && BeybladeNetworkManager.Instance.IsHost;
     }
 }

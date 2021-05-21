@@ -15,6 +15,8 @@ public class OfflineMenuManager : MonoBehaviour
     [SerializeField] InputField hostPlayerNameInputField;
     [SerializeField] Button buttonJoinGame;
     [SerializeField] Button buttonHostGame;
+    [SerializeField] Text join_colorSettingText;
+    [SerializeField] Text host_colorSettingText;
 
     private GameObject activeMenu;
 
@@ -62,11 +64,35 @@ public class OfflineMenuManager : MonoBehaviour
     public void InputFieldUpdate_JoinGameUsername()
     {
         buttonJoinGame.interactable = !string.IsNullOrEmpty(joinPlayerNameInputfield.text);
+        BeybladeNetworkManager.PlayerName = joinPlayerNameInputfield.text;
     }
 
     public void InputFieldUpdate_HostGameUsername()
     {
         buttonHostGame.interactable = !string.IsNullOrEmpty(hostPlayerNameInputField.text);
+        BeybladeNetworkManager.PlayerName = hostPlayerNameInputField.text;
+    }
+
+    public void UpdateColor(float index)
+    {
+        switch (Mathf.RoundToInt(index))
+        {
+            case 0:
+                BeybladeNetworkManager.PlayerColor = Color.white;
+                host_colorSettingText.text = "White";
+                join_colorSettingText.text = "White";
+                break;
+            case 1:
+                BeybladeNetworkManager.PlayerColor = Color.yellow;
+                host_colorSettingText.text = "Yellow";
+                join_colorSettingText.text = "Yellow";
+                break;
+            case 2:
+                BeybladeNetworkManager.PlayerColor = Color.cyan;
+                host_colorSettingText.text = "Cyan";
+                join_colorSettingText.text = "Cyan";
+                break;
+        }
     }
     #endregion
 

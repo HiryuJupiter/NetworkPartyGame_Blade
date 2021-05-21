@@ -13,15 +13,15 @@ public class ActualPlayer : NetworkBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float rotationSpeed = 500f;
 
-    //Text
-    [SerializeField] TextMesh text;
+    //Body parts
+    [SerializeField] TextMesh textScore;
+    [SerializeField] SpriteRenderer bodySprite;
+    [SerializeField] TextMesh playerNameText;
 
     //Ref
     Rigidbody2D rb;
 
     //Status
-    [SyncVar]
-    string displayName = "Loading...";
     [SyncVar]
     public int score;
     bool isMoving;
@@ -32,12 +32,17 @@ public class ActualPlayer : NetworkBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        //if (isLocalPlayer)
+        //CmdSetPlayerProperties(BeybladeNetworkManager.PlayerName, BeybladeNetworkManager.PlayerColor);
     }
 
     private void Update()
     {
         if (!isEnabled)
             return;
+
+        if (!setProperties)
+            StartGame();
 
         //Don't let other players control your player
         //if (!isLocalPlayer)
@@ -55,11 +60,6 @@ public class ActualPlayer : NetworkBehaviour
             RotateArrow();
             ShootBallWhenPressed();
         }
-
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    CmdSpawnEffect();
-        //}
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -146,7 +146,35 @@ public class ActualPlayer : NetworkBehaviour
     void RpcIncrementScore()
     {
         score++;
-        text.text = score.ToString();
+        textScore.text = score.ToString();
     }
     #endregion
+
+    #region Set player color and name
+    bool setProperties;
+    public void StartGame()
+    {
+        if (isLocalPlayer)
+        {
+            setProperties = true;
+            CmdSetPlayerProperties(BeybladeNetworkManager.PlayerName, BeybladeNetworkManager.PlayerColor);
+        }
+    }
+
+    [Command]
+    void CmdSetPlayerProperties(string name, Color col)
+    {
+        //Debug.Log("CmdSetPlayerProperties " + name);
+        RpcSetPlayerProperties(name, col);
+    }
+
+    [ClientRpc]
+    void RpcSetPlayerProperties(string name, Color col)
+    {
+        //Debug.Log("   color " + col);
+        bodySprite.color = col;
+        playerNameText.text = name;
+    }
+    #endregion
+
 }
